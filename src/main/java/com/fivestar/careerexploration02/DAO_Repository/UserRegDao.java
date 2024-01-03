@@ -15,15 +15,15 @@ public class UserRegDao
     //進行存檔 Insert into 進資料表
     public int saveUserForm(UserRegModel userRegForm)
     {
-        String sql01 = "insert into userregform(uname,email,mobile,address) values (?,?,?,?)";
-        return jdbcTemplate.update(sql01, userRegForm.getUname(), userRegForm.getEmail(), userRegForm.getMobile(), userRegForm.getAddress());  //update新增(sql語法物件,資料表.Model方法)
+        String sql01 = "insert into userdata(accountnum,passwd,username,email,mobile) values (?,?,?,?,?)";
+        return jdbcTemplate.update(sql01, userRegForm.getAccountnum(), userRegForm.getPasswd(), userRegForm.getUsername(), userRegForm.getEmail(), userRegForm.getMobile());  //update新增(sql語法物件,資料表.Model方法)
     }
 
     //檢查帳號是否存在
-//    public long testUserExist(String uname)
-//    {
-//        String sql02 = "select count(*) from userregform where uname=?";
-//        // select count(*) 回傳一慮使用 long 型別
-//        return jdbcTemplate.queryForObject(sql02,Long.class, uname);
-//    }
+    public long testUserExist(String accountnum)
+    {
+        String sql02 = "select count(*) from userdata where accountnum=?";
+        // select count(*) 回傳一慮使用 long 型別
+        return jdbcTemplate.queryForObject(sql02,Long.class, accountnum);
+    }
 }

@@ -11,8 +11,9 @@ import lombok.Setter;
 @Setter
 public class UserRegModel  //先定義Model
 {
-    private String uname;
+    private String accountnum;
+    private String passwd;
+    private String username;
     private String email;
     private String mobile;
-    private String address;
 }
