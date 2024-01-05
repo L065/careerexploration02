@@ -34,14 +34,16 @@ public class UserRegController
 
     //先使用老師的controller
     @PostMapping("/user_register02")
-    public String UserRegProcess2(@ModelAttribute UserRegModel usermodel, Model model) {
+    public String UserRegProcess2(@ModelAttribute UserRegModel usermodel, Model model)
+    {
         String msg = null;
         // 使用者送 request 進來後 回傳 註冊表單名稱
         // 呼叫 service 開始進行新增
         int result = userRegService.Registration(usermodel);
-        switch (result) {
+        switch (result)
+        {
             case 0:
-                msg = "新增失敗";
+                msg = "Registration failed";
                 break;
             case 1:
                 msg = "您的帳號已經成功註冊完畢";
