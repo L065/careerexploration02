@@ -26,4 +26,19 @@ public class UserRegDao
         // select count(*) 回傳一慮使用 long 型別
         return jdbcTemplate.queryForObject(sql02,Long.class, accountnum);
     }
+
+    //檢查帳號是否有禁用字
+    public long testAccountBannedWord(String accountnum)
+    {
+        String sql03 = "select * from userdata where accountnum=?";
+        return jdbcTemplate.queryForObject(sql03,Long.class, accountnum);
+    }
+
+    //檢查密碼是否有禁用字
+    public long testPasswordBannedWord(String passwd)
+    {
+        String sql04 = "select * from userdata where passwd=?";
+        return jdbcTemplate.queryForObject(sql04,Long.class, passwd);
+    }
+
 }
