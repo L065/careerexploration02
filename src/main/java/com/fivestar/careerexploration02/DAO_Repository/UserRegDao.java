@@ -40,5 +40,4 @@ public class UserRegDao
         String sql04 = "select * from userdata where passwd=?";
         return jdbcTemplate.queryForObject(sql04,Long.class, passwd);
     }
-
 }
