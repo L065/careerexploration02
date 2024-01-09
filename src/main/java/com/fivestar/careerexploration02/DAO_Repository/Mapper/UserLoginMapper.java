@@ -17,7 +17,9 @@ public class UserLoginMapper implements RowMapper<UserLoginModel> //把DB會員�
        uLModel.setAccountnum(rs.getNString("accountnum"));
        uLModel.setPasswd(rs.getNString("passwd"));
        uLModel.setUsername(rs.getNString("username"));
+       uLModel.setEmail(rs.getNString("email"));
        uLModel.setMobile(rs.getNString("mobile"));
+       uLModel.setRegdate(rs.getDate("regdate"));
        return uLModel;
     }
 }

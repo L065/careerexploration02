@@ -1,5 +1,6 @@
 package com.fivestar.careerexploration02.controller.DBController;
 
+import com.fivestar.careerexploration02.DAO_Repository.UserLoginDao;
 import com.fivestar.careerexploration02.model.userModel.UserLoginModel;
 import com.fivestar.careerexploration02.service.UserLoginService;
 import com.fivestar.careerexploration02.service.UserRegService;
@@ -21,13 +22,13 @@ public class LoginController
         UserLoginService userLoginService;
 
     @GetMapping("/login")
-    public String loginPage(Model model)
+    public String loginPage()
     {
         return "login_before";
     }
 
     @PostMapping("/login")
-    public String loginsuss(@RequestParam("accountnum") String accountnum,
+    public String loginsussPage(@RequestParam("accountnum") String accountnum,
                             @RequestParam("passwd") String passwd, HttpSession session,Model model)
     {
         UserLoginModel model01 = new UserLoginModel();
@@ -38,15 +39,23 @@ public class LoginController
         if(loginResult)
         {
             session.setAttribute("logInAcc",accountnum);
+            model.addAttribute("logSuess","You have successfully logged in.");
             return "loginsuss";
         }
         else
         {
-            model.addAttribute("logFail","帳號或密碼輸入錯誤，五秒後返回登入頁面");
-            return "login";
+            model.addAttribute("logFail","帳號或密碼輸入錯誤，三秒後返回登入頁面");
+            model.addAttribute("accountnum",accountnum);
+            model.addAttribute("passwd",passwd);
+            return "loginFail";
         }
-//        model.addAttribute("accountnum",accountnum);
-//        model.addAttribute("passwd",passwd);
-//        model.addAttribute("session",session);
     }
+//    @GetMapping("/testArray")
+//    public String testArray(Model model)
+//    {
+//        List<UserLoginModel> userList = userLoginService.getAllUsers(); // 假設有一個方法可以獲取所有會員資料
+//
+//        model.addAttribute("userList", userList); // 將會員資料加到 Model 中，以便在網頁中使用
+//        return "testPage"; // 返回渲染的網頁
+//    }
 }

@@ -14,7 +14,6 @@ public class UserLoginService
 
     public boolean loginTest(UserLoginModel member01)
     {
-
         UserLoginModel memberFromDb = userLoginDao.getAccPassWd(member01.getAccountnum(),member01.getPasswd());
 
         // 如果資料庫中找不到會員帳號和密碼均符合，則回傳false
@@ -25,4 +24,8 @@ public class UserLoginService
         // 若會員帳號和密碼均符合，則回傳true
         return true;
     }
+//    public List<UserLoginModel> getAllUsers()
+//    {
+//        return userLoginDao.getAllUsers();  //簡單把在userLoginDao查到的陣列資料準備轉到Controller使用
+//    }
 }

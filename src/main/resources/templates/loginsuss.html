@@ -2,11 +2,32 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Login Success</title>
 </head>
 <body>
+        <p><span th:text="${ logSuess }"> test msg </span></p>
         <p><span th:text="${ accountnum }"> test msg</span></p>
         <p><span th:text="${ passwd }"> test msg</span></p>
         <p><span th:text="${ session }"> test msg</span></p>
+
+        <p>跳轉首頁倒數：<span id="countdown">3</span> 秒</p>
+
+        <script>
+            var countdown = 3; // 3 秒
+            setInterval(timeCount, 1000);
+            function timeCount()
+            {
+                countdown--; // 每秒減少倒數計時
+                document.getElementById("countdown").innerHTML = countdown; // 顯示倒數秒數
+                if (countdown<=0) // 倒數計時為 0 時執行跳轉
+                {
+                    transToLogin();
+                }
+            }
+            function transToLogin()
+            {
+                location.href = "/homepage"; // 轉到 index.html 頁面
+            }
+        </script>
 </body>
 </html>

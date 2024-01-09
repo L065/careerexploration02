@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -17,4 +19,5 @@ public class UserLoginModel
     private String username;
     private String email;
     private String mobile;
+    private Date regdate;
 }
