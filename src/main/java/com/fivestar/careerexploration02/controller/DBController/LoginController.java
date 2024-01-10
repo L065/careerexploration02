@@ -1,25 +1,28 @@
 package com.fivestar.careerexploration02.controller.DBController;
 
-import com.fivestar.careerexploration02.DAO_Repository.UserLoginDao;
-import com.fivestar.careerexploration02.model.userModel.UserLoginModel;
+import com.fivestar.careerexploration02.model.userModel.UserLogModel02;
 import com.fivestar.careerexploration02.service.UserLoginService;
-import com.fivestar.careerexploration02.service.UserRegService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.log4j.Log4j2;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+
 public class LoginController
 {
     @Autowired
         UserLoginService userLoginService;
+
+    Logger logger = LoggerFactory.getLogger(LoginController.class);  //SpringBoot除錯訊息註解
 
     @GetMapping("/login")
     public String loginPage()
@@ -29,9 +32,10 @@ public class LoginController
 
     @PostMapping("/login")
     public String loginsussPage(@RequestParam("accountnum") String accountnum,
-                            @RequestParam("passwd") String passwd, HttpSession session,Model model)
+                                @RequestParam("passwd") String passwd,
+                                HttpSession session, Model model)
     {
-        UserLoginModel model01 = new UserLoginModel();
+        UserLogModel02 model01 = new UserLogModel02();
         model01.setAccountnum(accountnum);
         model01.setPasswd(passwd);
 
@@ -39,7 +43,11 @@ public class LoginController
         if(loginResult)
         {
             session.setAttribute("logInAcc",accountnum);
-            model.addAttribute("logSuess","You have successfully logged in.");
+            model.addAttribute("logSuess","Welcome back, you have successfully logged in.");
+            logger.warn("執行後可以先看到userName內容");
+            model.addAttribute("userName",model01.getUsername());
+            logger.warn("執行後可以後看到userName內容"+model01.getUsername());        //SpringBoot除錯訊息註解
+            logger.warn("執行後可以後看到userName內容"+accountnum);
             return "loginsuss";
         }
         else
@@ -49,13 +57,35 @@ public class LoginController
             model.addAttribute("passwd",passwd);
             return "loginFail";
         }
+
     }
-//    @GetMapping("/testArray")
-//    public String testArray(Model model)
+
+//    @GetMapping("/profile")     //防止重複登入
+//    public String viewProfile(HttpSession session, Model model)
 //    {
-//        List<UserLoginModel> userList = userLoginService.getAllUsers(); // 假設有一個方法可以獲取所有會員資料
-//
-//        model.addAttribute("userList", userList); // 將會員資料加到 Model 中，以便在網頁中使用
-//        return "testPage"; // 返回渲染的網頁
+//        UserLogModel02 loggedUser=(UserLogModel02) session.setAttribute("loggedUser",loggedUser);
+//        if (loggedUser != null)
+//        {
+//            model.addAttribute("loggedSuess", loggedUser);
+//            return "loginsuss";
+//        }
+//        else
+//        {
+//            return "login";
+//        }
 //    }
+
+    @GetMapping("/restricted-api")   //沒有登入的話，做出功能限制
+    @ResponseBody
+    public String restrictedApi(HttpSession session)
+    {
+        // 檢查是否有登入
+        if (session.getAttribute("logInAcc") == null)
+        {
+            return "You are not logged in. Access denied.";
+        }
+        // 如果已經登入，可以在這裡實現 API 的邏輯
+        return "This is a restricted API endpoint. You have access!";
+
+    }
 }

@@ -1,10 +1,8 @@
 package com.fivestar.careerexploration02.service;
 import com.fivestar.careerexploration02.DAO_Repository.UserLoginDao;
-import com.fivestar.careerexploration02.model.userModel.UserLoginModel;
+import com.fivestar.careerexploration02.model.userModel.UserLogModel02;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UserLoginService
@@ -12,9 +10,9 @@ public class UserLoginService
     @Autowired
     UserLoginDao userLoginDao;
 
-    public boolean loginTest(UserLoginModel member01)
+    public boolean loginTest(UserLogModel02 member01)
     {
-        UserLoginModel memberFromDb = userLoginDao.getAccPassWd(member01.getAccountnum(),member01.getPasswd());
+        UserLogModel02 memberFromDb = userLoginDao.getAccPassWd(member01.getAccountnum(),member01.getPasswd());
 
         // 如果資料庫中找不到會員帳號和密碼均符合，則回傳false
         if (memberFromDb == null || !memberFromDb.getPasswd().equals(member01.getPasswd()))
@@ -24,8 +22,10 @@ public class UserLoginService
         // 若會員帳號和密碼均符合，則回傳true
         return true;
     }
-//    public List<UserLoginModel> getAllUsers()
-//    {
-//        return userLoginDao.getAllUsers();  //簡單把在userLoginDao查到的陣列資料準備轉到Controller使用
-//    }
+
+    public UserLogModel02 transUserName(String accountnum, String passwd)  //做一個登入時可同步顯示使用者名稱
+    {
+        return userLoginDao.getUserNameAtDao(accountnum, passwd);
+    }
+
 }

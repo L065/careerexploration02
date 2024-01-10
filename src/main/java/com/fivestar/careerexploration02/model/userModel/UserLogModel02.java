@@ -11,7 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-public class UserLoginModel
+public class UserLogModel02
 {
     private int memberid;
     private String accountnum;
@@ -20,4 +20,9 @@ public class UserLoginModel
     private String email;
     private String mobile;
     private Date regdate;
+
+    public void setUsername(String username)
+    {
+        this.username=username;
+    }
 }
