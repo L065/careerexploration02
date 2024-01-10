@@ -20,9 +20,4 @@ public class UserLogModel02
     private String email;
     private String mobile;
     private Date regdate;
-
-    public void setUsername(String username)
-    {
-        this.username=username;
-    }
 }

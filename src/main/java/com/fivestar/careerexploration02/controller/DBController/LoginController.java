@@ -36,28 +36,27 @@ public class LoginController
                                 HttpSession session, Model model)
     {
         UserLogModel02 model01 = new UserLogModel02();
+        UserLogModel02 showUserName = userLoginService.transUserName(accountnum);   //從DAO簡單寫從帳號對應的使用者名稱，給Service傳
         model01.setAccountnum(accountnum);
         model01.setPasswd(passwd);
 
         boolean loginResult = userLoginService.loginTest(model01);
         if(loginResult)
         {
-            session.setAttribute("logInAcc",accountnum);
+            session.setAttribute("logInAcc",accountnum);  // 登入成功，設定 session 屬性
             model.addAttribute("logSuess","Welcome back, you have successfully logged in.");
-            logger.warn("執行後可以先看到userName內容");
-            model.addAttribute("userName",model01.getUsername());
-            logger.warn("執行後可以後看到userName內容"+model01.getUsername());        //SpringBoot除錯訊息註解
+            model.addAttribute("showUserName", showUserName.getUsername()); //先判別帳密一致後，印出與帳號對應的使用者名稱
+            logger.warn("執行後可以先看到userName內容");   //SpringBoot除錯訊息註解
             logger.warn("執行後可以後看到userName內容"+accountnum);
             return "loginsuss";
         }
         else
         {
             model.addAttribute("logFail","帳號或密碼輸入錯誤，三秒後返回登入頁面");
-            model.addAttribute("accountnum",accountnum);
-            model.addAttribute("passwd",passwd);
+//            model.addAttribute("accountnum",accountnum);
+//            model.addAttribute("passwd",passwd);
             return "loginFail";
         }
-
     }
 
 //    @GetMapping("/profile")     //防止重複登入

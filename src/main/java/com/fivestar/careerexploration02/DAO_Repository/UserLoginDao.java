@@ -3,6 +3,7 @@ package com.fivestar.careerexploration02.DAO_Repository;
 import com.fivestar.careerexploration02.DAO_Repository.Mapper.UserLoginMapper;
 import com.fivestar.careerexploration02.model.userModel.UserLogModel02;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -35,10 +36,17 @@ public class UserLoginDao
             return MemberAP.isEmpty() ? null : MemberAP.get(0);
     }
 
-
-    public UserLogModel02 getUserNameAtDao(String accountnum, String passwd)
+    //類別中新增一個方法，用於根據帳號檢索使用者詳細資訊
+    public UserLogModel02 getUserNameAtDao(String accountnum)
     {
-        String sql03= "SELECT * FROM userdata WHERE accountnum = ? AND passwd = ?";
-        return jdbcTemplate.queryForObject(sql03, new UserLoginMapper(), accountnum, passwd);
+        String sql03= "SELECT * FROM userdata WHERE accountnum = ?";
+        try
+        {
+            return jdbcTemplate.queryForObject(sql03, new Object[]{accountnum}, new UserLoginMapper());
+        }
+        catch (EmptyResultDataAccessException e)
+        {
+            return null;  // 沒有找到相應的會員資料
+        }
     }
 }
