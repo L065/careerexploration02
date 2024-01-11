@@ -7,17 +7,54 @@
 <body>
 
     <h2>Register member</h2>
-    <form method="post" th:object="${userRegForm}" action="/user_register">
+    <form method="post" th:object="${userRegForm}" action="/user_register" onsubmit="return passwordCheck()">
 
         <p> Your Account: <input type="text" th:field="*{accountnum}" name="accountnum"></p>
-        <p> Your Password: <input type="text" th:field="*{passwd}" name="passwd"></p>
-        <p> Confirm password: <input></p>
+        <p> Your Password: <input type="password" id="password" th:field="*{passwd}" name="passwd"></p>
+        <p> Confirm password: <input type="password" id="confirmPassword" oninput="checkPasswordMatch()">
+        <div id="passwordWarning" style="color: #e16969;"></div></p>
         <p> Your Name: <input type="text" th:field="*{username}" name="username"></p>
         <p> Your Phone Number: <input type="text" th:field="*{mobile}" name="mobile"></p>
-        <p> Your E-mail: <input type="text" th:field="*{email}" name="email"></p>
+        <p> Your E-mail: <input type="email" th:field="*{email}" name="email"></p>
 
         <button type="submit" name="sub">Submit</button>
         <button type="reset" name="clear">Clear All</button>
     </form>
+
+    <script>
+        function passwordCheck()    //密碼與確認密碼判斷相同，不然註冊表單無法送出
+        {
+            var password=document.getElementById("password").value;
+            var confirmPassword= document.getElementById("confirmPassword").value;
+
+            if(password !== confirmPassword)
+            {
+                document.getElementById("passwordWarning").innerText="Password and Confirm password do not match";
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        function checkPasswordMatch()   //密碼與確認密碼判斷相同，不然會出現警告
+        {
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+            var warningElement = document.getElementById("warning");
+
+            if (password === confirmPassword)
+            {
+                return true;
+            }
+            else
+            {
+                warningElement.innerText = "Password and Confirm password do not match";
+                warningElement.style.color = "red";
+                confirmPassword.style.backgroundColor="red";
+            }
+        }
+
+    </script>
 </body>
 </html>

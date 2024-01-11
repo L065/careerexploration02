@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -77,7 +77,7 @@
   <div class="content">
     
     <!-- 背景圖 -->
-<img class="theMap" src="/img/地圖20240108.png">
+<img class="theMap" src="/img/地圖20240108.png" th:if="${session.logInAcc}">   <!-- 測試登入與否，接收LoginController的session設定true -->
 
 <!-- 教堂 -->
       <div class="Icontainer image-container1">
@@ -150,7 +150,7 @@
 
  <script>
     const content = document.querySelector('.content');
-    const fullscreenCheck=false;
+    let fullscreenCheck=false;
     function toggleFullScreen() {
       if (!document.fullscreenElement) {
         if (content.requestFullscreen) {

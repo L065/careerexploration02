@@ -43,7 +43,9 @@ public class LoginController
         boolean loginResult = userLoginService.loginTest(model01);
         if(loginResult)
         {
-            session.setAttribute("logInAcc",accountnum);  // 登入成功，設定 session 屬性
+            session.setAttribute("logInAcc",true);  // 登入成功，設定session屬性是true
+//            model.addAttribute("loggedIn", session.getAttribute("logInAcc") != null);
+//            //把會員session設置到Model中，這樣Thymeleaf就能夠使用它
             model.addAttribute("logSuess","Welcome back, you have successfully logged in.");
             model.addAttribute("showUserName", showUserName.getUsername()); //先判別帳密一致後，印出與帳號對應的使用者名稱
             logger.warn("執行後可以先看到userName內容");   //SpringBoot除錯訊息註解
@@ -52,9 +54,8 @@ public class LoginController
         }
         else
         {
-            model.addAttribute("logFail","帳號或密碼輸入錯誤，三秒後返回登入頁面");
-//            model.addAttribute("accountnum",accountnum);
-//            model.addAttribute("passwd",passwd);
+            //帳號或密碼輸入錯誤，三秒後返回登入頁面
+            model.addAttribute("logFail","Incorrect username or password. Returning to the login page in three seconds.");
             return "loginFail";
         }
     }
@@ -74,7 +75,7 @@ public class LoginController
 //        }
 //    }
 
-    @GetMapping("/restricted-api")   //沒有登入的話，做出功能限制
+    @GetMapping("/restricted-api")   //沒有登入的話，做出功能限制的測試API
     @ResponseBody
     public String restrictedApi(HttpSession session)
     {
@@ -85,6 +86,15 @@ public class LoginController
         }
         // 如果已經登入，可以在這裡實現 API 的邏輯
         return "This is a restricted API endpoint. You have access!";
-
     }
+
+//    @PostMapping("/login")
+//    public String showByLogged(HttpSession session, Model model)   //沒有登入的話，用th:if做出遮蓋
+//    {
+//        // 將會員session設置到Model中
+//        model.addAttribute("loggedIn", session.getAttribute("logInAcc") != null);
+//        //把會員session設置到Model中，這樣Thymeleaf就能夠使用它
+//        return "EnglishProject20240109";
+//    }
+
 }

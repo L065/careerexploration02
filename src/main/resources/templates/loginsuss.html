@@ -5,12 +5,13 @@
     <title>Login Success</title>
 </head>
 <body>
-        <p><span th:text="${ logSuess }"> test msg </span></p>
+<!--        <h2><span th:if="${session.logInAcc}"> 這段測試文字如果model 有 傳到會顯示</span></h2>-->
+<!--        <h4><span th:unless="${session.logInAcc}"> 這段測試文字如果model 沒 傳到會顯示</span></h4>-->
+        <p><span th:text="${ logSuess }"> test msg </span></p> <!-- 會傳登入成功訊息 -->
         <p>userName: <span th:text="${ showUserName }"> test msg</span></p>
-<!--        <p>2.accountnum: <span th:text="${ accountnum }"> test msg</span></p>-->
-<!--        <p>3.passwd: <span th:text="${ passwd }"> test msg</span></p>-->
-        <p>4.session:<span th:text="${ session }"> test msg</span></p>
-
+<!--        <p>test accountnum: <span th:text="${ accountnum }"> test msg</span></p>-->
+<!--        <p>test passwd: <span th:text="${ passwd }"> test msg</span></p>-->
+<!--        <p>test session:<span th:text="${ session }"> test msg</span></p>-->
         <p>Redirecting to homepage in:<span id="countdown"> 3</span> second</p>
 
         <script>
